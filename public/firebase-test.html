@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Upload Test</title>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <h1>Firebase Upload Test</h1>
+    <p>This page tests Firebase upload functionality for web compatibility.</p>
+    
+    <script>
+        // Initialize Firebase
+        if (!window.firebase?.apps?.length) {
+            firebase.initializeApp({
+                apiKey: "AIzaSyDummyKeyForDevelopment123456789",
+                authDomain: "ready-to-run-cq-app.firebaseapp.com",
+                projectId: "ready-to-run-cq-app",
+                storageBucket: "ready-to-run-cq-app.firebasestorage.app",
+                messagingSenderId: "123456789012",
+                appId: "1:123456789012:web:abcdef123456789"
+            });
+        }
+
+        // Optional: anonymous auth if your storage rules require it
+        if (firebase.auth && !firebase.auth().currentUser) {
+            firebase.auth().signInAnonymously().catch(console.warn);
+        }
+
+        console.log('Firebase initialized for web testing');
+    </script>
+</body>
+</html>
