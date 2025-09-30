@@ -65,7 +65,7 @@ export default function SettingsScreen() {
         {
           icon: <Smartphone size={20} color={colors.tint} />,
           title: "App Version",
-          subtitle: "v2.5.0",
+          subtitle: "v2.5.1",
           type: "info" as const
         },
         {
