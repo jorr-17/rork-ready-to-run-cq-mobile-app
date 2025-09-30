@@ -276,6 +276,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
+    display: 'flex',
   },
   settingTextContainer: {
     flex: 1,
