@@ -8,8 +8,6 @@ import {
   Linking,
   Alert,
   Platform,
-  Keyboard,
-  TouchableWithoutFeedback,
 } from "react-native";
 
 import { Phone, MessageCircle, AlertTriangle, Download, Camera, Upload } from "lucide-react-native";
@@ -108,19 +106,13 @@ export default function ErraticSteeringScreen() {
     );
   }
 
-  const dismissKeyboard = () => {
-    Keyboard.dismiss();
-  };
-
   return (
-    <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <View style={[styles.container, { backgroundColor: colors.bgElevated }]}>
         <ScrollView 
           style={styles.scrollView}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
-          nestedScrollEnabled={true}
         >
         {/* Software Update Notice */}
         <View style={[styles.updateNotice, { backgroundColor: colors.warning }]}>
@@ -128,7 +120,7 @@ export default function ErraticSteeringScreen() {
             <View style={styles.updateTextContainer}>
               <Text style={styles.updateTitle}>⚠️ Ensure Latest Software</Text>
               <Text style={styles.updateText}>
-                Before troubleshooting, verify you're running the latest Ag Leader software. Updates often resolve common GPS issues.
+                Before troubleshooting, verify you&apos;re running the latest Ag Leader software. Updates often resolve common GPS issues.
               </Text>
               <View style={styles.updateOptions}>
                 <TouchableOpacity
@@ -150,7 +142,7 @@ export default function ErraticSteeringScreen() {
         <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.divider }]}>
           <Text style={[styles.headerTitle, { color: colors.text }]}>Erratic or Poor Steering</Text>
           <Text style={[styles.headerSubtitle, { color: colors.textMuted }]}>
-            If your machine feels jumpy, zig-zaggy, or won't hold a straight line, it is often related to the wheel angle sensor (WAS). This sensor tells the steering system exactly where the wheels are pointing. If the information is wrong or inconsistent, steering accuracy will suffer.
+            If your machine feels jumpy, zig-zaggy, or won&apos;t hold a straight line, it is often related to the wheel angle sensor (WAS). This sensor tells the steering system exactly where the wheels are pointing. If the information is wrong or inconsistent, steering accuracy will suffer.
           </Text>
         </View>
 
@@ -215,7 +207,7 @@ export default function ErraticSteeringScreen() {
               <Text style={[styles.stepTitle, { color: colors.text }]}>Watch for Warnings</Text>
             </View>
             <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
-              If the sensor is faulty, the system will normally display a message such as "Check WAS."
+              If the sensor is faulty, the system will normally display a message such as &quot;Check WAS.&quot;
             </Text>
           </View>
         </View>
@@ -303,7 +295,7 @@ export default function ErraticSteeringScreen() {
           <AlertTriangle size={24} color="#FFFFFF" />
           <Text style={styles.emergencyTitle}>Still Having Steering Issues?</Text>
           <Text style={styles.emergencyText}>
-            If you've completed all troubleshooting steps and still have steering problems, contact our Ag Leader Dealer GPS specialists immediately.
+            If you&apos;ve completed all troubleshooting steps and still have steering problems, contact our Ag Leader Dealer GPS specialists immediately.
           </Text>
           <View style={styles.emergencyButtons}>
             <TouchableOpacity
@@ -360,7 +352,6 @@ export default function ErraticSteeringScreen() {
         </View>
       )}
       </View>
-    </TouchableWithoutFeedback>
   );
 }
 

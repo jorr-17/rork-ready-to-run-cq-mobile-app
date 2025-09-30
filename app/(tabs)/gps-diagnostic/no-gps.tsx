@@ -8,8 +8,6 @@ import {
   Linking,
   Alert,
   Platform,
-  Keyboard,
-  TouchableWithoutFeedback,
 } from "react-native";
 
 import { Satellite, Phone, MessageCircle, AlertTriangle, CheckCircle, Wrench, Download, Camera, Upload } from "lucide-react-native";
@@ -172,19 +170,13 @@ export default function NoGPSScreen() {
     );
   }
 
-  const dismissKeyboard = () => {
-    Keyboard.dismiss();
-  };
-
   return (
-    <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <View style={[styles.container, { backgroundColor: colors.bgElevated }]}>
         <ScrollView 
           style={styles.scrollView}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
-          nestedScrollEnabled={true}
         >
         {/* Software Update Notice */}
         <View style={[styles.updateNotice, { backgroundColor: colors.warning }]}>
@@ -411,7 +403,6 @@ export default function NoGPSScreen() {
         </View>
       )}
       </View>
-    </TouchableWithoutFeedback>
   );
 }
 
