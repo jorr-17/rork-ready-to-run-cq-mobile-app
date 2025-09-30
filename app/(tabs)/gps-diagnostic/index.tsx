@@ -10,7 +10,7 @@ import {
   Platform,
 } from "react-native";
 
-import { ExternalLink, MessageCircle, Phone, Navigation, Camera, Upload, Gauge, Download } from "lucide-react-native";
+import { ExternalLink, MessageCircle, Phone, Navigation, Camera, Upload, Gauge, Download, Map } from "lucide-react-native";
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from "expo-router";
@@ -342,6 +342,23 @@ export default function GPSDiagnosticScreen() {
               <View style={styles.resourceTextContainer}>
                 <Text style={[styles.resourceTitle, { color: colors.text }]}>Erratic Steering</Text>
                 <Text style={[styles.resourceDescription, { color: colors.textMuted }]}>Troubleshoot steering issues and wheel angle sensor problems</Text>
+              </View>
+              <ExternalLink size={20} color={colors.textMuted} />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.quickLinkCard, { backgroundColor: colors.card, borderColor: colors.divider }]}
+            onPress={() => router.push('/gps-diagnostic/no-mapping')}
+            activeOpacity={0.7}
+          >
+            <View style={styles.quickLinkHeader}>
+              <View style={[styles.iconContainer, { backgroundColor: `${colors.tint}15` }]}>
+                <Map size={24} color={colors.tint} />
+              </View>
+              <View style={styles.resourceTextContainer}>
+                <Text style={[styles.resourceTitle, { color: colors.text }]}>No GPS Lines or Mapping</Text>
+                <Text style={[styles.resourceDescription, { color: colors.textMuted }]}>Fix missing GPS lines and mapping display issues</Text>
               </View>
               <ExternalLink size={20} color={colors.textMuted} />
             </View>
