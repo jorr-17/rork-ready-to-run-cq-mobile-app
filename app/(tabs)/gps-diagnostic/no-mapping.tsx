@@ -147,6 +147,13 @@ export default function NoMappingScreen() {
           </Text>
         </View>
 
+        <View style={[styles.preventionNotice, { backgroundColor: colors.success }]}>
+          <Text style={styles.preventionTitle}>🎯 #1 Solution: Boundaries</Text>
+          <Text style={styles.preventionText}>
+            Managing boundaries effectively is the most common solution for preventing GPS mapping issues. Clearing map bounds resolves the majority of &quot;no mapping display&quot; problems and ensures accurate field mapping.
+          </Text>
+        </View>
+
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: colors.text }]}>Solution: Clear Map Bounds</Text>
           
@@ -157,9 +164,17 @@ export default function NoMappingScreen() {
               </View>
               <Text style={[styles.stepTitle, { color: colors.text }]}>Access Map Settings</Text>
             </View>
-            <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
-              Navigate to your display&apos;s map or field settings menu. Look for options related to &quot;Map Bounds,&quot; &quot;Field Boundaries,&quot; or &quot;Display Area.&quot;
-            </Text>
+            <View style={styles.stepContent}>
+              <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
+                Navigate to your Ag Leader display&apos;s map settings menu:
+              </Text>
+              <Text style={[styles.stepDescription, { color: colors.textMuted, fontWeight: "600" as const }]}>
+                Setup → Map → Clear Bounds
+              </Text>
+              <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
+                Look for options related to &quot;Map Bounds,&quot; &quot;Field Boundaries,&quot; or &quot;Display Area&quot; in your display&apos;s settings.
+              </Text>
+            </View>
           </View>
 
           <View style={[styles.stepCard, { backgroundColor: colors.card, borderColor: colors.divider }]}>
@@ -171,10 +186,10 @@ export default function NoMappingScreen() {
             </View>
             <View style={styles.stepContent}>
               <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
-                Select the option to &quot;Clear Map Bounds&quot; or &quot;Reset Map Area.&quot; This removes any restrictions on what the display can show.
+                Select the option to &quot;Clear Map Bounds&quot; or &quot;Reset Map Area.&quot; This action removes any restrictions on what the display can show and resets the map boundaries.
               </Text>
               <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
-                On InCommand displays, this is typically found under: Setup → Map → Clear Bounds
+                Confirm the action when prompted. This will reset the map boundaries to allow full display of your GPS location and guidance information.
               </Text>
             </View>
           </View>
@@ -186,9 +201,14 @@ export default function NoMappingScreen() {
               </View>
               <Text style={[styles.stepTitle, { color: colors.text }]}>Verify GPS Signal</Text>
             </View>
-            <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
-              After clearing map bounds, confirm that your GPS satellite icon is green (indicating good signal). If it&apos;s grey or yellow, you may have a GPS signal issue that needs to be addressed first.
-            </Text>
+            <View style={styles.stepContent}>
+              <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
+                After clearing map bounds, confirm that your GPS satellite icon is green (indicating good signal). If it&apos;s grey or yellow, you may have a GPS signal issue that needs to be addressed first.
+              </Text>
+              <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
+                Ensure proper device calibration and check for any software updates if GPS signal issues persist.
+              </Text>
+            </View>
           </View>
 
           <View style={[styles.stepCard, { backgroundColor: colors.card, borderColor: colors.divider }]}>
@@ -203,7 +223,7 @@ export default function NoMappingScreen() {
                 Ensure your map zoom level is appropriate. If zoomed too far in or out, guidance lines may not be visible.
               </Text>
               <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
-                Try adjusting the zoom to see if lines appear at different scales.
+                Try adjusting the zoom to see if lines appear at different scales. The optimal zoom level varies by field size and operation type.
               </Text>
             </View>
           </View>
@@ -216,7 +236,7 @@ export default function NoMappingScreen() {
               <Text style={[styles.stepTitle, { color: colors.text }]}>Verify Display Layers</Text>
             </View>
             <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
-              Check that guidance lines, coverage maps, and field boundaries are enabled in your display layer settings. These may have been accidentally turned off.
+              Check that guidance lines, coverage maps, and field boundaries are enabled in your display layer settings. These may have been accidentally turned off. Consult your user manual for specific layer configuration options.
             </Text>
           </View>
         </View>
@@ -678,6 +698,29 @@ const styles = StyleSheet.create({
   },
   spacer: {
     width: 80,
+  },
+  preventionNotice: {
+    margin: 16,
+    marginTop: 8,
+    padding: 16,
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  preventionTitle: {
+    fontSize: 17,
+    fontWeight: "bold" as const,
+    color: "#FFFFFF",
+    marginBottom: 6,
+  },
+  preventionText: {
+    fontSize: 14,
+    color: "#FFFFFF",
+    lineHeight: 20,
+    opacity: 0.95,
   },
   selectedImagesPreview: {
     flexDirection: "row",
