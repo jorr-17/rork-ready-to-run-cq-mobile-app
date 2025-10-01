@@ -12,6 +12,7 @@ export interface ThemeContextValue {
   setThemeMode: (mode: ThemeMode) => void;
   getLogoUri: () => string;
   getImageUri: (lightUri: string, darkUri?: string) => string;
+  isInitialized: boolean;
 }
 
 // Logo asset - same logo for both themes, white tint applied in dark mode
@@ -47,7 +48,7 @@ export const [ThemeProvider, useTheme] = createContextHook(() => {
       } catch (error) {
         console.log('Failed to load theme preference:', error);
       } finally {
-        setIsInitialized(true);
+        setTimeout(() => setIsInitialized(true), 0);
       }
     };
 
@@ -101,7 +102,8 @@ export const [ThemeProvider, useTheme] = createContextHook(() => {
     setThemeMode,
     getLogoUri,
     getImageUri,
-  }), [themeMode, colors, isDark, setThemeMode, getLogoUri, getImageUri]);
+    isInitialized,
+  }), [themeMode, colors, isDark, setThemeMode, getLogoUri, getImageUri, isInitialized]);
 });
 
 // Hook for getting theme-aware colors (backwards compatibility)

@@ -15,7 +15,15 @@ const queryClient = new QueryClient();
 
 function RootLayoutNav() {
   const router = useRouter();
-  const { colors } = useTheme();
+  const { colors, isInitialized } = useTheme();
+
+  if (!isInitialized) {
+    return (
+      <View style={[styles.loadingContainer, { backgroundColor: '#FFFFFF' }]}>
+        <ActivityIndicator size="large" color="#007AFF" />
+      </View>
+    );
+  }
 
   return (
     <Stack screenOptions={{ headerBackTitle: "Back" }}>
@@ -55,29 +63,21 @@ export default function RootLayout() {
   const [isAppReady, setIsAppReady] = useState(false);
 
   useEffect(() => {
-    // Initialize app immediately to prevent hydration timeout
     const initializeApp = async () => {
       try {
-        // Minimal delay for splash screen
-        await new Promise(resolve => setTimeout(resolve, 100));
-        setIsAppReady(true);
         await SplashScreen.hideAsync();
+        setIsAppReady(true);
       } catch (error) {
         console.warn('App initialization error:', error);
-        setIsAppReady(true); // Still show app even if splash screen fails
+        setIsAppReady(true);
       }
     };
     
     initializeApp();
   }, []);
 
-  // Show loading screen until app is ready
   if (!isAppReady) {
-    return (
-      <View style={[styles.loadingContainer, { backgroundColor: '#FFFFFF' }]}>
-        <ActivityIndicator size="large" color="#007AFF" />
-      </View>
-    );
+    return null;
   }
 
   return (
