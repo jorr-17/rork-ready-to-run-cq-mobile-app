@@ -10,7 +10,7 @@ import {
   Platform,
 } from "react-native";
 
-import { ExternalLink, MessageCircle, Phone, Navigation, Camera, Upload, Gauge, Download, Map } from "lucide-react-native";
+import { ExternalLink, MessageCircle, Phone, Navigation, Camera, Upload, Gauge, Download, Map, Wifi, Zap } from "lucide-react-native";
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from "expo-router";
@@ -359,6 +359,40 @@ export default function GPSDiagnosticScreen() {
               <View style={styles.resourceTextContainer}>
                 <Text style={[styles.resourceTitle, { color: colors.text }]}>No GPS Lines or Mapping</Text>
                 <Text style={[styles.resourceDescription, { color: colors.textMuted }]}>Fix missing GPS lines and mapping display issues</Text>
+              </View>
+              <ExternalLink size={20} color={colors.textMuted} />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.quickLinkCard, { backgroundColor: colors.card, borderColor: colors.divider }]}
+            onPress={() => router.push('/gps-diagnostic/dropping-connection')}
+            activeOpacity={0.7}
+          >
+            <View style={styles.quickLinkHeader}>
+              <View style={[styles.iconContainer, { backgroundColor: `${colors.tint}15` }]}>
+                <Wifi size={24} color={colors.tint} />
+              </View>
+              <View style={styles.resourceTextContainer}>
+                <Text style={[styles.resourceTitle, { color: colors.text }]}>Dropping Connection / Intermittent GPS Loss</Text>
+                <Text style={[styles.resourceDescription, { color: colors.textMuted }]}>Fix GPS signal dropouts and intermittent connection issues</Text>
+              </View>
+              <ExternalLink size={20} color={colors.textMuted} />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.quickLinkCard, { backgroundColor: colors.card, borderColor: colors.divider }]}
+            onPress={() => router.push('/gps-diagnostic/power-issues')}
+            activeOpacity={0.7}
+          >
+            <View style={styles.quickLinkHeader}>
+              <View style={[styles.iconContainer, { backgroundColor: `${colors.tint}15` }]}>
+                <Zap size={24} color={colors.tint} />
+              </View>
+              <View style={styles.resourceTextContainer}>
+                <Text style={[styles.resourceTitle, { color: colors.text }]}>Power / Electrical Issues</Text>
+                <Text style={[styles.resourceDescription, { color: colors.textMuted }]}>Troubleshoot display shutdowns and power problems</Text>
               </View>
               <ExternalLink size={20} color={colors.textMuted} />
             </View>
