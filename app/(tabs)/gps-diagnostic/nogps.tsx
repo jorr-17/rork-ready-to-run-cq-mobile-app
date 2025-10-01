@@ -220,7 +220,7 @@ export default function NoGPSScreen() {
             <View style={styles.section}>
               {step.satelliteType === "grey" ? (
                 <>
-                  <View style={[styles.primarySolutionCard, { backgroundColor: "#4CAF50", borderColor: "#45a049" }]}>
+                  <View style={[styles.primarySolutionCard, { backgroundColor: "#059669", borderColor: "#047857" }]}>
                     <View style={styles.primarySolutionHeader}>
                       <Text style={styles.primarySolutionBadge}>🎯 #1 Solution</Text>
                       <Text style={styles.primarySolutionTitle}>Check the Ethernet Connection</Text>
@@ -261,7 +261,7 @@ export default function NoGPSScreen() {
                 </>
               ) : (
                 <>
-                  <View style={[styles.primarySolutionCard, { backgroundColor: "#4CAF50", borderColor: "#45a049" }]}>
+                  <View style={[styles.primarySolutionCard, { backgroundColor: "#059669", borderColor: "#047857" }]}>
                     <View style={styles.primarySolutionHeader}>
                       <Text style={styles.primarySolutionBadge}>🎯 #1 Solution</Text>
                       <Text style={styles.primarySolutionTitle}>Check the Base Station Channel or Correction Source</Text>
