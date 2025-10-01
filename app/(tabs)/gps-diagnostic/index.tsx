@@ -897,6 +897,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold" as const,
     color: "#FFFFFF",
     marginBottom: 6,
+    textAlign: "center",
   },
   updateText: {
     fontSize: 14,
@@ -904,10 +905,12 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     opacity: 0.95,
     marginBottom: 12,
+    textAlign: "center",
   },
   updateOptions: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     flexWrap: "wrap",
     gap: 8,
   },
