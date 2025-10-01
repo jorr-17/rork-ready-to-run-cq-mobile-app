@@ -1,9 +1,9 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { TouchableOpacity, StyleSheet, View, ActivityIndicator } from "react-native";
+import { TouchableOpacity, StyleSheet } from "react-native";
 import { Info, Settings } from "lucide-react-native";
 import { StorageProvider } from "@/constants/storage";
 import { ThemeProvider, useTheme } from "@/constants/theme";
@@ -17,12 +17,14 @@ function RootLayoutNav() {
   const router = useRouter();
   const { colors, isInitialized } = useTheme();
 
+  useEffect(() => {
+    if (isInitialized) {
+      SplashScreen.hideAsync().catch(console.warn);
+    }
+  }, [isInitialized]);
+
   if (!isInitialized) {
-    return (
-      <View style={[styles.loadingContainer, { backgroundColor: '#FFFFFF' }]}>
-        <ActivityIndicator size="large" color="#007AFF" />
-      </View>
-    );
+    return null;
   }
 
   return (
@@ -60,26 +62,6 @@ function RootLayoutNav() {
 }
 
 export default function RootLayout() {
-  const [isAppReady, setIsAppReady] = useState(false);
-
-  useEffect(() => {
-    const initializeApp = async () => {
-      try {
-        await SplashScreen.hideAsync();
-        setIsAppReady(true);
-      } catch (error) {
-        console.warn('App initialization error:', error);
-        setIsAppReady(true);
-      }
-    };
-    
-    initializeApp();
-  }, []);
-
-  if (!isAppReady) {
-    return null;
-  }
-
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
@@ -99,11 +81,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   headerButtonLeft: {
     marginLeft: 8,
     padding: 8,

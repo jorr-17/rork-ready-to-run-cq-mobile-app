@@ -36,22 +36,29 @@ export const [ThemeProvider, useTheme] = createContextHook(() => {
   const isDark = actualTheme === 'dark';
   const colors = isDark ? darkTheme : lightTheme;
 
-  // Load saved theme preference on mount
   useEffect(() => {
+    let mounted = true;
+    
     const loadThemePreference = async () => {
       try {
         const savedTheme = await storage.getThemePreference();
-        if (savedTheme && ['system', 'light', 'dark'].includes(savedTheme)) {
+        if (mounted && savedTheme && ['system', 'light', 'dark'].includes(savedTheme)) {
           setThemeModeState(savedTheme as ThemeMode);
         }
       } catch (error) {
         console.log('Failed to load theme preference:', error);
       } finally {
-        setTimeout(() => setIsInitialized(true), 0);
+        if (mounted) {
+          setIsInitialized(true);
+        }
       }
     };
 
     loadThemePreference();
+    
+    return () => {
+      mounted = false;
+    };
   }, [storage]);
 
   // Update system UI when theme changes (only after initialization)
