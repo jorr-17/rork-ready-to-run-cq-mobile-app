@@ -11,7 +11,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   Keyboard,
-  TouchableWithoutFeedback,
 } from "react-native";
 
 import { Camera, Image as ImageIcon, X, Upload, CheckCircle, ArrowLeft, Copy, ChevronDown } from "lucide-react-native";
@@ -389,30 +388,24 @@ export default function SnapSendScreen() {
     setReferenceNumber("");
   };
 
-  const dismissKeyboard = () => {
-    Keyboard.dismiss();
-  };
-
   if (showSuccess) {
     return <SuccessScreen referenceNumber={referenceNumber} onClose={handleSuccessClose} />;
   }
 
   return (
-    <TouchableWithoutFeedback onPress={dismissKeyboard}>
-      <KeyboardAvoidingView
-        style={[styles.container, { backgroundColor: colors.bgElevated }]}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+    <KeyboardAvoidingView
+      style={[styles.container, { backgroundColor: colors.bgElevated }]}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
+    >
+      <ScrollView 
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        scrollEnabled={true}
+        bounces={true}
       >
-        <ScrollView 
-          style={styles.scrollView}
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-          scrollEnabled={true}
-          bounces={true}
-          removeClippedSubviews={false}
-          nestedScrollEnabled={true}
-        >
         <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.divider }]}>
           <Text style={[styles.headerTitle, { color: colors.text }]}>Snap & Send</Text>
           <Text style={[styles.headerText, { color: colors.textMuted }]}>
@@ -491,7 +484,6 @@ export default function SnapSendScreen() {
               placeholder="John Smith"
               placeholderTextColor={colors.textMuted}
               returnKeyType="next"
-              onSubmitEditing={dismissKeyboard}
               blurOnSubmit={true}
             />
           </View>
@@ -506,7 +498,6 @@ export default function SnapSendScreen() {
               placeholderTextColor={colors.textMuted}
               keyboardType="phone-pad"
               returnKeyType="next"
-              onSubmitEditing={dismissKeyboard}
               blurOnSubmit={true}
             />
           </View>
@@ -522,7 +513,6 @@ export default function SnapSendScreen() {
               placeholder="e.g., John Deere 8R, Case IH Magnum, Kubota M7"
               placeholderTextColor={colors.textMuted}
               returnKeyType="next"
-              onSubmitEditing={dismissKeyboard}
               blurOnSubmit={true}
             />
           </View>
@@ -550,7 +540,6 @@ export default function SnapSendScreen() {
               numberOfLines={4}
               textAlignVertical="top"
               returnKeyType="done"
-              onSubmitEditing={dismissKeyboard}
               blurOnSubmit={true}
             />
           </View>
@@ -586,9 +575,8 @@ export default function SnapSendScreen() {
         <Text style={[styles.disclaimer, { color: colors.textMuted }]}>
           * We aim to respond within 24 hours during business days
         </Text>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
