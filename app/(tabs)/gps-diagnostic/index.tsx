@@ -10,7 +10,7 @@ import {
   Platform,
 } from "react-native";
 
-import { ExternalLink, MessageCircle, Phone, Navigation, Camera, Upload, Gauge, Download, Map, Wifi, Zap } from "lucide-react-native";
+import { ExternalLink, MessageCircle, Phone, Navigation, Camera, ArrowUp, Gauge, Download, Map, Wifi, Zap } from "lucide-react-native";
 
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from "expo-router";
@@ -480,8 +480,8 @@ export default function GPSDiagnosticScreen() {
               onPress={handleUploadPhoto}
               activeOpacity={0.8}
             >
-              <Upload size={24} color="#FFFFFF" />
-              <Text style={[styles.photoButtonText, { textAlign: "center" }]}>Upload Photos</Text>
+              <ArrowUp size={20} color="#FFFFFF" style={{ flexShrink: 0 }} />
+              <Text style={styles.photoButtonText}>Upload Photos</Text>
             </TouchableOpacity>
           </View>
           
@@ -771,15 +771,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 14,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    gap: 6,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    gap: 8,
   },
   photoButtonText: {
     fontSize: 16,
-    fontWeight: "600" as const,
+    fontWeight: "500" as const,
     color: "#FFFFFF",
+    lineHeight: 16,
   },
   photoHelpText: {
     gap: 4,
