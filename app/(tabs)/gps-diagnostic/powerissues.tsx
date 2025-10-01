@@ -287,7 +287,6 @@ export default function PowerIssuesScreen() {
               onPress={handleUploadPhoto}
               activeOpacity={0.8}
             >
-              <Upload size={24} color="#FFFFFF" />
               <Text style={[styles.photoButtonText, { textAlign: "center" }]}>Upload Photos</Text>
             </TouchableOpacity>
           </View>
