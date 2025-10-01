@@ -393,6 +393,7 @@ export default function SnapSendScreen() {
       >
         <ScrollView 
           style={styles.scrollView}
+          contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
           scrollEnabled={true}
@@ -586,6 +587,9 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
+  scrollContent: {
+    flexGrow: 1,
+  },
   header: {
     padding: 20,
     borderBottomWidth: 1,
@@ -606,6 +610,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold" as const,
     marginBottom: 4,
+    textAlign: "center",
   },
   sectionHint: {
     fontSize: 14,
@@ -629,6 +634,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 8,
     fontWeight: "600" as const,
+    textAlign: "center",
   },
   imageContainer: {
     position: "relative",

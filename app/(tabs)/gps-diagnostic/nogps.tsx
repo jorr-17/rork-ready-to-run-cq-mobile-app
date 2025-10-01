@@ -378,6 +378,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
+    flexGrow: 1,
     paddingBottom: 20,
   },
   header: {
@@ -636,6 +637,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600" as const,
     color: "#FFFFFF",
+    textAlign: "center",
   },
   photoHelpText: {
     gap: 4,
