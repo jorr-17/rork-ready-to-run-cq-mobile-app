@@ -20,7 +20,7 @@ export default function GPSDiagnosticLayout() {
       <Stack.Screen
         name="index"
         options={{
-          title: "GPS Diagnostic",
+          title: "GPS Diagnostics",
         }}
       />
       <Stack.Screen
