@@ -26,31 +26,31 @@ export default function GPSDiagnosticLayout() {
       <Stack.Screen
         name="nogps"
         options={{
-          title: "",
+          title: "No GPS Signal",
         }}
       />
       <Stack.Screen
         name="erraticsteering"
         options={{
-          title: "",
+          title: "Erratic Steering",
         }}
       />
       <Stack.Screen
         name="nomapping"
         options={{
-          title: "",
+          title: "No Mapping",
         }}
       />
       <Stack.Screen
         name="droppingconnection"
         options={{
-          title: "",
+          title: "Dropping Connection",
         }}
       />
       <Stack.Screen
         name="powerissues"
         options={{
-          title: "",
+          title: "Power Issues",
         }}
       />
     </Stack>
