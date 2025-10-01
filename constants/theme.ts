@@ -22,6 +22,7 @@ export const [ThemeProvider, useTheme] = createContextHook(() => {
   const systemColorScheme = useColorScheme();
   const [themeMode, setThemeModeState] = useState<ThemeMode>('system');
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
+  const storage = useStorage();
 
   // Determine the actual theme based on mode and system preference
   const getActualTheme = (mode: ThemeMode): 'light' | 'dark' => {
@@ -34,8 +35,6 @@ export const [ThemeProvider, useTheme] = createContextHook(() => {
   const actualTheme = getActualTheme(themeMode);
   const isDark = actualTheme === 'dark';
   const colors = isDark ? darkTheme : lightTheme;
-
-  const storage = useStorage();
 
   // Load saved theme preference on mount
   useEffect(() => {
