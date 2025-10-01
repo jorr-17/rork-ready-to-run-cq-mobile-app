@@ -140,39 +140,42 @@ export default function NoMappingScreen() {
         <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.divider }]}>
           <View style={styles.headerTitleRow}>
             <Map size={32} color={colors.tint} />
-            <Text style={[styles.headerTitle, { color: colors.text }]}>No GPS Lines or Mapping on Screen</Text>
+            <Text style={[styles.headerTitle, { color: colors.text }]}>No Coverage Map or GPS Mapping Appearing</Text>
           </View>
           <Text style={[styles.headerSubtitle, { color: colors.textMuted }]}>
-            If you can&apos;t see GPS lines, guidance paths, or field mapping on your display, the issue is often related to map bounds or display settings. This prevents the system from showing your location and guidance information properly.
+            If your Ag Leader display isn&apos;t creating coverage maps (even though the implement is lowered and GPS is active), the issue is often caused by map bounds or &quot;flier points&quot; (points logged outside the field). This stops the display from showing your location or recording field coverage properly.
           </Text>
         </View>
 
         <View style={[styles.preventionNotice, { backgroundColor: colors.success }]}>
-          <Text style={styles.preventionTitle}>🎯 #1 Solution: Boundaries</Text>
+          <Text style={styles.preventionTitle}>🎯 #1 Solution: Create Field Boundaries</Text>
           <Text style={styles.preventionText}>
-            Managing boundaries effectively is the most common solution for preventing GPS mapping issues. Clearing map bounds resolves the majority of &quot;no mapping display&quot; problems and ensures accurate field mapping.
+            The most effective way to prevent GPS mapping issues is to have a field boundary saved for every field in your display. Boundaries ensure the display knows the correct field limits and eliminates most &quot;no mapping&quot; problems.
           </Text>
         </View>
 
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>Solution: Clear Map Bounds</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>Quick Fix: Clear Map Bounds</Text>
+          <Text style={[styles.stepDescription, { color: colors.textMuted, marginBottom: 16 }]}>
+            If coverage still doesn&apos;t appear, use the Clear Bounds function to reset the map to your current GPS position.
+          </Text>
           
           <View style={[styles.stepCard, { backgroundColor: colors.card, borderColor: colors.divider }]}>
             <View style={styles.stepHeader}>
               <View style={[styles.stepNumber, { backgroundColor: colors.tint }]}>
                 <Text style={styles.stepNumberText}>1</Text>
               </View>
-              <Text style={[styles.stepTitle, { color: colors.text }]}>Access Map Settings</Text>
+              <Text style={[styles.stepTitle, { color: colors.text }]}>InCommand Displays</Text>
             </View>
             <View style={styles.stepContent}>
               <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
-                Navigate to your Ag Leader display&apos;s map settings menu:
-              </Text>
-              <Text style={[styles.stepDescription, { color: colors.textMuted, fontWeight: "600" as const }]}>
-                Setup → Map → Clear Bounds
+                • Tap Menu (upper-left of the mapping screen)
               </Text>
               <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
-                Look for options related to &quot;Map Bounds,&quot; &quot;Field Boundaries,&quot; or &quot;Display Area&quot; in your display&apos;s settings.
+                • Select Event Options
+              </Text>
+              <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
+                • Choose Clear Map Bounds
               </Text>
             </View>
           </View>
@@ -182,90 +185,65 @@ export default function NoMappingScreen() {
               <View style={[styles.stepNumber, { backgroundColor: colors.tint }]}>
                 <Text style={styles.stepNumberText}>2</Text>
               </View>
-              <Text style={[styles.stepTitle, { color: colors.text }]}>Clear Map Bounds</Text>
+              <Text style={[styles.stepTitle, { color: colors.text }]}>Integra / Versa Displays (v5.2+)</Text>
             </View>
             <View style={styles.stepContent}>
               <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
-                Select the option to &quot;Clear Map Bounds&quot; or &quot;Reset Map Area.&quot; This action removes any restrictions on what the display can show and resets the map boundaries.
+                • Tap the Events Wrench
               </Text>
               <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
-                Confirm the action when prompted. This will reset the map boundaries to allow full display of your GPS location and guidance information.
-              </Text>
-            </View>
-          </View>
-
-          <View style={[styles.stepCard, { backgroundColor: colors.card, borderColor: colors.divider }]}>
-            <View style={styles.stepHeader}>
-              <View style={[styles.stepNumber, { backgroundColor: colors.tint }]}>
-                <Text style={styles.stepNumberText}>3</Text>
-              </View>
-              <Text style={[styles.stepTitle, { color: colors.text }]}>Verify GPS Signal</Text>
-            </View>
-            <View style={styles.stepContent}>
-              <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
-                After clearing map bounds, confirm that your GPS satellite icon is green (indicating good signal). If it&apos;s grey or yellow, you may have a GPS signal issue that needs to be addressed first.
+                • Go to Event Options
               </Text>
               <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
-                Ensure proper device calibration and check for any software updates if GPS signal issues persist.
+                • Select Clear Map Bounds
               </Text>
             </View>
-          </View>
-
-          <View style={[styles.stepCard, { backgroundColor: colors.card, borderColor: colors.divider }]}>
-            <View style={styles.stepHeader}>
-              <View style={[styles.stepNumber, { backgroundColor: colors.tint }]}>
-                <Text style={styles.stepNumberText}>4</Text>
-              </View>
-              <Text style={[styles.stepTitle, { color: colors.text }]}>Check Zoom Level</Text>
-            </View>
-            <View style={styles.stepContent}>
-              <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
-                Ensure your map zoom level is appropriate. If zoomed too far in or out, guidance lines may not be visible.
-              </Text>
-              <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
-                Try adjusting the zoom to see if lines appear at different scales. The optimal zoom level varies by field size and operation type.
-              </Text>
-            </View>
-          </View>
-
-          <View style={[styles.stepCard, { backgroundColor: colors.card, borderColor: colors.divider }]}>
-            <View style={styles.stepHeader}>
-              <View style={[styles.stepNumber, { backgroundColor: colors.tint }]}>
-                <Text style={styles.stepNumberText}>5</Text>
-              </View>
-              <Text style={[styles.stepTitle, { color: colors.text }]}>Verify Display Layers</Text>
-            </View>
-            <Text style={[styles.stepDescription, { color: colors.textMuted }]}>
-              Check that guidance lines, coverage maps, and field boundaries are enabled in your display layer settings. These may have been accidentally turned off. Consult your user manual for specific layer configuration options.
-            </Text>
           </View>
         </View>
 
         <View style={[styles.additionalSection, { backgroundColor: colors.card, borderColor: colors.divider }]}>
-          <Text style={[styles.additionalTitle, { color: colors.text }]}>Additional Checks</Text>
+          <Text style={[styles.additionalTitle, { color: colors.text }]}>Additional Tips</Text>
           <View style={styles.additionalList}>
             <View style={[styles.additionalItem, { backgroundColor: colors.bgElevated, borderColor: colors.divider }]}>
               <View style={[styles.bulletPoint, { backgroundColor: colors.tint }]} />
               <Text style={[styles.additionalText, { color: colors.textMuted }]}>
-                Confirm you&apos;re in the correct field or job. If you&apos;ve loaded the wrong field, guidance lines won&apos;t match your location.
+                <Text style={{ fontWeight: "600" as const }}>Load jobs in the field:</Text> Wait until you arrive at the field before loading an operation.
               </Text>
             </View>
             <View style={[styles.additionalItem, { backgroundColor: colors.bgElevated, borderColor: colors.divider }]}>
               <View style={[styles.bulletPoint, { backgroundColor: colors.tint }]} />
               <Text style={[styles.additionalText, { color: colors.textMuted }]}>
-                Check if guidance lines need to be created or imported. If no lines exist for the field, you&apos;ll need to create them first.
+                <Text style={{ fontWeight: "600" as const }}>Check GPS signal:</Text> Confirm the GPS icon is green (good signal).
               </Text>
             </View>
             <View style={[styles.additionalItem, { backgroundColor: colors.bgElevated, borderColor: colors.divider }]}>
               <View style={[styles.bulletPoint, { backgroundColor: colors.tint }]} />
               <Text style={[styles.additionalText, { color: colors.textMuted }]}>
-                Restart the display. Sometimes a simple reboot can resolve display rendering issues.
+                <Text style={{ fontWeight: "600" as const }}>Avoid off-field logging:</Text> Be mindful of driving/logging outside of boundaries.
               </Text>
             </View>
             <View style={[styles.additionalItem, { backgroundColor: colors.bgElevated, borderColor: colors.divider }]}>
               <View style={[styles.bulletPoint, { backgroundColor: colors.tint }]} />
               <Text style={[styles.additionalText, { color: colors.textMuted }]}>
-                Verify your coordinate system and datum settings match your region. Incorrect settings can cause mapping issues.
+                <Text style={{ fontWeight: "600" as const }}>Cleanup:</Text> Any stray &quot;flier points&quot; can be deleted later in Ag Leader SMS software.
+              </Text>
+            </View>
+            <View style={[styles.additionalItem, { backgroundColor: colors.bgElevated, borderColor: colors.divider }]}>
+              <View style={[styles.bulletPoint, { backgroundColor: colors.tint }]} />
+              <Text style={[styles.additionalText, { color: colors.textMuted }]}>
+                <Text style={{ fontWeight: "600" as const }}>Create and save boundaries</Text> for all fields in advance.
+              </Text>
+            </View>
+            <View style={[styles.additionalItem, { backgroundColor: colors.bgElevated, borderColor: colors.divider }]}>
+              <View style={[styles.bulletPoint, { backgroundColor: colors.tint }]} />
+              <Text style={[styles.additionalText, { color: colors.textMuted }]}>
+                <Text style={{ fontWeight: "600" as const }}>Double-check</Text> that the correct boundary is loaded with the field operation.
+              </Text>
+            </View>
+            <View style={[styles.additionalItem, { backgroundColor: colors.bgElevated, borderColor: colors.divider }]}>
+              <View style={[styles.bulletPoint, { backgroundColor: colors.tint }]} />
+              <Text style={[styles.additionalText, { color: colors.textMuted }]}>
+                Boundaries also help prevent accidental logging of points outside the field.
               </Text>
             </View>
           </View>
@@ -342,9 +320,9 @@ export default function NoMappingScreen() {
 
         <View style={[styles.emergencySection, { backgroundColor: colors.danger }]}>
           <AlertTriangle size={24} color="#FFFFFF" />
-          <Text style={styles.emergencyTitle}>Still No Mapping Display?</Text>
+          <Text style={styles.emergencyTitle}>Still No Coverage Map?</Text>
           <Text style={styles.emergencyText}>
-            If you&apos;ve cleared map bounds and still can&apos;t see GPS lines or mapping, contact our Ag Leader Dealer GPS specialists for assistance.
+            If you&apos;ve cleared map bounds and still can&apos;t see coverage mapping, contact our Ag Leader Dealer GPS specialists for assistance.
           </Text>
           <View style={styles.emergencyButtons}>
             <TouchableOpacity
