@@ -596,7 +596,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 20,
     borderRadius: 10,
-    gap: 4,
+    gap: 8,
   },
   photoButtonText: {
     fontSize: 16,
