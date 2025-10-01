@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
 import React from "react";
+import { Platform } from "react-native";
 import { useTheme } from "@/constants/theme";
 
 export default function GPSDiagnosticLayout() {
@@ -15,7 +16,7 @@ export default function GPSDiagnosticLayout() {
         headerTitleStyle: {
           fontWeight: "bold" as const,
         },
-        headerBackTitle: "",
+        ...(Platform.OS === 'ios' ? { headerBackTitle: " " } : {}),
       }}
     >
       <Stack.Screen
