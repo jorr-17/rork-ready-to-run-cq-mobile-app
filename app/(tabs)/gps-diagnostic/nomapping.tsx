@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 import { Phone, MessageCircle, AlertTriangle, Download, Camera, Upload, Map } from "lucide-react-native";
-import { CameraView, useCameraPermissions } from 'expo-camera';
+
 import * as ImagePicker from 'expo-image-picker';
 import { useTheme } from "@/constants/theme";
 import GPSForm from "@/components/GPSForm";
@@ -19,12 +19,11 @@ import GPSSuccessScreen from "@/components/GPSSuccessScreen";
 
 export default function NoMappingScreen() {
   const { colors } = useTheme();
-  const [showCamera, setShowCamera] = useState(false);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [referenceNumber, setReferenceNumber] = useState<string>("");
-  const [cameraPermission, requestCameraPermissions] = useCameraPermissions();
+
 
   const handleTakePhoto = async () => {
     if (Platform.OS === 'web') {
@@ -32,14 +31,23 @@ export default function NoMappingScreen() {
       return;
     }
     
-    if (!cameraPermission?.granted) {
-      const permission = await requestCameraPermissions();
-      if (!permission.granted) {
-        Alert.alert('Permission Required', 'Camera permission is required to take photos.');
-        return;
-      }
+    const permission = await ImagePicker.requestCameraPermissionsAsync();
+    if (!permission.granted) {
+      Alert.alert('Permission Required', 'Camera permission is required to take photos.');
+      return;
     }
-    setShowCamera(true);
+
+    const result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 0.8,
+      allowsEditing: false,
+    });
+
+    if (!result.canceled && result.assets && result.assets.length > 0) {
+      const newImageUris = result.assets.map(asset => asset.uri);
+      setSelectedImages(prev => [...prev, ...newImageUris]);
+      handleSendPhotos([...selectedImages, ...newImageUris]);
+    }
   };
 
   const handleUploadPhoto = async () => {
@@ -63,11 +71,7 @@ export default function NoMappingScreen() {
     }
   };
 
-  const handleCameraCapture = async (uri: string) => {
-    setSelectedImages(prev => [...prev, uri]);
-    setShowCamera(false);
-    handleSendPhotos([...selectedImages, uri]);
-  };
+
 
   const handleSendPhotos = (imageUris: string[]) => {
     console.log('Photos selected:', imageUris.length);
@@ -344,36 +348,7 @@ export default function NoMappingScreen() {
 
         <View style={styles.bottomSpacing} />
         </ScrollView>
-      
-      {showCamera && Platform.OS !== 'web' && (
-        <View style={styles.cameraContainer}>
-          <CameraView
-            style={styles.camera}
-            facing="back"
-          >
-            <View style={styles.cameraControls}>
-              <TouchableOpacity
-                style={[styles.cameraButton, { backgroundColor: 'rgba(0,0,0,0.6)' }]}
-                onPress={() => setShowCamera(false)}
-              >
-                <Text style={styles.cameraButtonText}>Cancel</Text>
-              </TouchableOpacity>
-              
-              <TouchableOpacity
-                style={[styles.captureButton, { backgroundColor: colors.tint }]}
-                onPress={async () => {
-                  const mockUri = `mock-photo-uri-${Date.now()}`;
-                  handleCameraCapture(mockUri);
-                }}
-              >
-                <Camera size={32} color="#FFFFFF" />
-              </TouchableOpacity>
-              
-              <View style={styles.spacer} />
-            </View>
-          </CameraView>
-        </View>
-      )}
+
       </View>
   );
 }
@@ -634,52 +609,11 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 18,
   },
-  cameraContainer: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "#000000",
-  },
-  camera: {
-    flex: 1,
-  },
-  cameraControls: {
-    position: "absolute",
-    bottom: 50,
-    left: 0,
-    right: 0,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 30,
-  },
-  cameraButton: {
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 8,
-    width: 80,
-    alignItems: "center",
-  },
-  cameraButtonText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "600" as const,
-  },
-  captureButton: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+
   bottomSpacing: {
     height: 20,
   },
-  spacer: {
-    width: 80,
-  },
+
   preventionNotice: {
     margin: 16,
     marginTop: 8,
