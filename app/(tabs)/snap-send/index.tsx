@@ -216,17 +216,19 @@ export default function SnapSendScreen() {
 
       const result = useCamera 
         ? await ImagePicker.launchCameraAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            mediaTypes: ['images'],
             quality: 0.8,
             base64: false,
             allowsEditing: false,
+            exif: false,
           })
         : await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            mediaTypes: ['images'],
             allowsMultipleSelection: true,
             quality: 0.8,
             base64: false,
             allowsEditing: false,
+            exif: false,
           });
 
       if (!result.canceled && result.assets) {
