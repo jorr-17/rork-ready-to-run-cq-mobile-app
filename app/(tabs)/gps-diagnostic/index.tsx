@@ -315,7 +315,7 @@ export default function GPSDiagnosticScreen() {
           
           <TouchableOpacity
             style={[styles.quickLinkCard, { backgroundColor: colors.card, borderColor: colors.divider }]}
-            onPress={() => router.push('/gps-diagnostic/no-gps')}
+            onPress={() => router.push('/gps-diagnostic/nogps')}
             activeOpacity={0.7}
           >
             <View style={styles.quickLinkHeader}>
@@ -332,7 +332,7 @@ export default function GPSDiagnosticScreen() {
 
           <TouchableOpacity
             style={[styles.quickLinkCard, { backgroundColor: colors.card, borderColor: colors.divider }]}
-            onPress={() => router.push('/gps-diagnostic/erratic-steering')}
+            onPress={() => router.push('/gps-diagnostic/erraticsteering')}
             activeOpacity={0.7}
           >
             <View style={styles.quickLinkHeader}>
@@ -349,7 +349,7 @@ export default function GPSDiagnosticScreen() {
 
           <TouchableOpacity
             style={[styles.quickLinkCard, { backgroundColor: colors.card, borderColor: colors.divider }]}
-            onPress={() => router.push('/gps-diagnostic/no-mapping')}
+            onPress={() => router.push('/gps-diagnostic/nomapping')}
             activeOpacity={0.7}
           >
             <View style={styles.quickLinkHeader}>
@@ -366,7 +366,7 @@ export default function GPSDiagnosticScreen() {
 
           <TouchableOpacity
             style={[styles.quickLinkCard, { backgroundColor: colors.card, borderColor: colors.divider }]}
-            onPress={() => router.push('/gps-diagnostic/dropping-connection')}
+            onPress={() => router.push('/gps-diagnostic/droppingconnection')}
             activeOpacity={0.7}
           >
             <View style={styles.quickLinkHeader}>
@@ -383,7 +383,7 @@ export default function GPSDiagnosticScreen() {
 
           <TouchableOpacity
             style={[styles.quickLinkCard, { backgroundColor: colors.card, borderColor: colors.divider }]}
-            onPress={() => router.push('/gps-diagnostic/power-issues')}
+            onPress={() => router.push('/gps-diagnostic/powerissues')}
             activeOpacity={0.7}
           >
             <View style={styles.quickLinkHeader}>
