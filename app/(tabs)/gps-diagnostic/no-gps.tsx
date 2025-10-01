@@ -40,16 +40,14 @@ export default function NoGPSScreen() {
   const troubleshootingSteps: TroubleshootingStep[] = [
     {
       title: "Grey Satellite – What It Means",
-      description: "A grey satellite icon means your display isn't receiving GPS data from the receiver, or not connected to the steering controller.",
+      description: "A grey satellite icon means your display isn't receiving GPS data from the receiver, or the receiver isn't properly connected to the steering controller.",
       icon: <Satellite size={32} color={greyColor} />,
       satelliteType: "grey",
       steps: [
-        "Check Ethernet Cable – make sure the Ethernet cable is securely connected between the display and the steering controller.",
-        "Verify Steering System Selection – ensure the correct system (ParaDyme, GeoSteer, OnTrac, etc.) is chosen under GPS/Guidance setup. Use the wrench icon to test connection.",
-        "Switch to Manual Guidance – if communication fails, try Manual Guidance. If the satellite turns green, the issue likely lies with communication to the steering controller.",
-        "Confirm NMEA Settings – ensure GGA and VTG are enabled at 10/20 Hz and the baud rate is at least 38,400.",
-        "Reset to Defaults – if it's still grey after all steps, tap 'Reset to Defaults.'",
-        "Still Not Working? – contact your Ag Leader Dealer or Technical Support for further help."
+        "Check the Ethernet Connection|The most common cause of a grey satellite icon is a loose or faulty Ethernet connection between the display and the GPS receiver/steering controller. Ensure the Ethernet cable is plugged in securely on both ends. Inspect the cable for bent pins, dirt, or damage. If possible, swap with a known-good cable to rule out hardware faults.",
+        "Verify Steering System Selection|Confirm the correct steering system (ParaDyme, GeoSteer, SteerCommand, OnTrac, etc.) is selected in GPS/Guidance Setup. Use the wrench icon to test the connection.",
+        "Check Receiver Status|Verify receiver LEDs are indicating normal operation (consult receiver manual for LED codes). If no lights or error patterns, check receiver power supply.",
+        "Restart the Display|Power-cycle the display to reinitialize communication."
       ]
     },
     {
@@ -218,20 +216,39 @@ export default function NoGPSScreen() {
               </Text>
             </View>
             
-            {/* Diagnostic Steps */}
+            {/* #1 Solution - Green Box */}
+            {step.satelliteType === "grey" && (
+              <View style={[styles.primarySolution, { backgroundColor: "#10B981" }]}>
+                <Text style={styles.primarySolutionTitle}>🎯 #1 Solution: Check the Ethernet Connection</Text>
+                <Text style={styles.primarySolutionText}>
+                  The most common cause of a grey satellite icon is a loose or faulty Ethernet connection between the display and the GPS receiver/steering controller.
+                </Text>
+                <View style={styles.primarySolutionSteps}>
+                  <Text style={styles.primarySolutionStep}>• Ensure the Ethernet cable is plugged in securely on both ends.</Text>
+                  <Text style={styles.primarySolutionStep}>• Inspect the cable for bent pins, dirt, or damage.</Text>
+                  <Text style={styles.primarySolutionStep}>• If possible, swap with a known-good cable to rule out hardware faults.</Text>
+                </View>
+              </View>
+            )}
+            
+            {/* Additional Steps */}
             <View style={styles.section}>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>Diagnostic Steps</Text>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>{step.satelliteType === "grey" ? "Additional Steps" : "Diagnostic Steps"}</Text>
               
               {step.steps.map((stepText, stepIndex) => {
                 const [title, description] = stepText.includes('|') 
                   ? stepText.split('|') 
                   : [stepText.split(' – ')[0] || stepText.split(' - ')[0], stepText];
                 
+                if (step.satelliteType === "grey" && stepIndex === 0) {
+                  return null;
+                }
+                
                 return (
                   <View key={stepIndex} style={[styles.stepCard, { backgroundColor: colors.card, borderColor: colors.divider }]}>
                     <View style={styles.stepHeader}>
                       <View style={[styles.stepNumber, { backgroundColor: colors.tint }]}>
-                        <Text style={styles.stepNumberText}>{stepIndex + 1}</Text>
+                        <Text style={styles.stepNumberText}>{step.satelliteType === "grey" ? stepIndex : stepIndex + 1}</Text>
                       </View>
                       <Text style={[styles.stepTitle, { color: colors.text }]}>
                         {title}
@@ -746,5 +763,33 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "600" as const,
     color: "#FFFFFF",
+  },
+  primarySolution: {
+    margin: 20,
+    marginTop: 0,
+    padding: 20,
+    borderRadius: 12,
+  },
+  primarySolutionTitle: {
+    fontSize: 18,
+    fontWeight: "bold" as const,
+    color: "#FFFFFF",
+    marginBottom: 12,
+  },
+  primarySolutionText: {
+    fontSize: 15,
+    color: "#FFFFFF",
+    lineHeight: 22,
+    marginBottom: 12,
+    opacity: 0.95,
+  },
+  primarySolutionSteps: {
+    gap: 8,
+  },
+  primarySolutionStep: {
+    fontSize: 14,
+    color: "#FFFFFF",
+    lineHeight: 20,
+    opacity: 0.95,
   },
 });
