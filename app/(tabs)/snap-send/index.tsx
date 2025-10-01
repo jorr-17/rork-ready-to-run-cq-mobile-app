@@ -304,8 +304,17 @@ export default function SnapSendScreen() {
     setIsSubmitting(true);
     
     try {
-      const timestamp = Date.now().toString();
-      const refNumber = timestamp;
+      const now = new Date();
+      const year = now.getUTCFullYear();
+      const month = String(now.getUTCMonth() + 1).padStart(2, '0');
+      const day = String(now.getUTCDate()).padStart(2, '0');
+      const hours = String(now.getUTCHours()).padStart(2, '0');
+      const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+      const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+      const timestamp = `${year}${month}${day}${hours}${minutes}${seconds}`;
+      const uuid = Math.random().toString(36).substring(2, 5).toUpperCase();
+      const refCode = `${timestamp}-${uuid}`;
+      const refNumber = refCode;
       
       // Filter valid images
       const validImages = formData.images.filter(uri => uri && uri.trim().length > 0 && uri !== 'undefined' && uri !== 'null');
@@ -319,13 +328,15 @@ export default function SnapSendScreen() {
         // Use the new upload utility
         uploadResults = await uploadMultipleIssueFiles({
           bucketFolder: "snap-send",
+          refCode: refCode,
           imageUris: validImages,
           meta: {
             full_name: formData.fullName,
             phone: formData.phone,
             machine: formData.machine,
             issue_type: formData.issueType,
-            issue: formData.issueDescription
+            issue: formData.issueDescription,
+            refCode: refCode
           }
         });
         
@@ -342,6 +353,7 @@ export default function SnapSendScreen() {
         images: uploadResults.map(result => result.downloadUrl),
         timestamp: timestamp,
         reference_number: refNumber,
+        refCode: refCode,
         submitted_at: new Date().toISOString(),
       };
 

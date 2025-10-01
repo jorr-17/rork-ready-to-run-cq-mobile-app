@@ -39,11 +39,11 @@ function safeSlug(s: string, max = 32) {
   return (s || "").toString().trim().replace(/\s+/g, "-").slice(0, max);
 }
 
-function buildObjectPath(folder: string, opts: { machine?: string; issue_type?: string; ext?: string }) {
-  const ts = new Date().toISOString().replace(/[:.]/g, "-");
+function buildObjectPath(folder: string, refCode: string, opts: { machine?: string; issue_type?: string; ext?: string; index?: number }) {
   const base = `${safeSlug(opts.machine || "machine")}_${safeSlug(opts.issue_type || "issue")}`;
   const ext = opts.ext || "jpg";
-  return `${folder}/${ts}_${base}.${ext}`;
+  const fileIndex = opts.index !== undefined ? `_${opts.index + 1}` : "";
+  return `${folder}/${refCode}/${base}${fileIndex}.${ext}`;
 }
 
 export type UploadResult = {
@@ -55,18 +55,20 @@ export type UploadResult = {
 
 type UploadMultipleArgs = {
   bucketFolder: "snap-send" | "gps-problems";
+  refCode: string;
   imageUris: string[];   // e.g., ["file://...", "content://...", "data:..."]
   meta: {
     full_name?: string;
     phone?: string;
-    machine?: string;   // for GPS we’ll map system -> machine automatically
-    system?: string;    // (so you don’t HAVE to rename in callers)
+    machine?: string;   // for GPS we'll map system -> machine automatically
+    system?: string;    // (so you don't HAVE to rename in callers)
     issue_type?: string;
     issue?: string;
+    refCode?: string;
   };
 };
 
-async function uploadOneFromUri(bucketFolder: "snap-send" | "gps-problems", uri: string, meta: UploadMultipleArgs["meta"]): Promise<UploadResult> {
+async function uploadOneFromUri(bucketFolder: "snap-send" | "gps-problems", refCode: string, uri: string, meta: UploadMultipleArgs["meta"], index: number): Promise<UploadResult> {
   ensureFirebase();
   const storage = getStorage();
 
@@ -80,10 +82,11 @@ async function uploadOneFromUri(bucketFolder: "snap-send" | "gps-problems", uri:
   const guessedExt = contentType.includes("/") ? contentType.split("/").pop() : "jpg";
 
   // 2) Build a nice path (folders auto-create)
-  const objectPath = buildObjectPath(bucketFolder, {
+  const objectPath = buildObjectPath(bucketFolder, refCode, {
     machine: meta.machine || meta.system,   // map system→machine if needed
     issue_type: meta.issue_type,
     ext: guessedExt || "jpg",
+    index: index,
   });
 
   const fileRef = ref(storage, objectPath);
@@ -97,6 +100,7 @@ async function uploadOneFromUri(bucketFolder: "snap-send" | "gps-problems", uri:
       machine: meta.machine || meta.system || "",  // ensure "machine" always present
       issue_type: meta.issue_type || "",
       issue: meta.issue || "",
+      refCode: meta.refCode || refCode,
     },
   };
 
@@ -113,7 +117,7 @@ async function uploadOneFromUri(bucketFolder: "snap-send" | "gps-problems", uri:
 }
 
 export async function uploadMultipleIssueFiles(args: UploadMultipleArgs): Promise<UploadResult[]> {
-  const { bucketFolder, imageUris, meta } = args;
+  const { bucketFolder, refCode, imageUris, meta } = args;
 
   const validUris = (imageUris || []).filter(u =>
     typeof u === "string" &&
@@ -123,7 +127,7 @@ export async function uploadMultipleIssueFiles(args: UploadMultipleArgs): Promis
   );
 
   const results = await Promise.allSettled(
-    validUris.map(uri => uploadOneFromUri(bucketFolder, uri, meta))
+    validUris.map((uri, index) => uploadOneFromUri(bucketFolder, refCode, uri, meta, index))
   );
 
   const successes: UploadResult[] = [];

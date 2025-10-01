@@ -58,8 +58,17 @@ export default function GPSForm({ imageUris, onSuccess, onCancel }: GPSFormProps
     setIsSubmitting(true);
     
     try {
-      const timestamp = Date.now().toString();
-      const refNumber = timestamp;
+      const now = new Date();
+      const year = now.getUTCFullYear();
+      const month = String(now.getUTCMonth() + 1).padStart(2, '0');
+      const day = String(now.getUTCDate()).padStart(2, '0');
+      const hours = String(now.getUTCHours()).padStart(2, '0');
+      const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+      const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+      const timestamp = `${year}${month}${day}${hours}${minutes}${seconds}`;
+      const uuid = Math.random().toString(36).substring(2, 5).toUpperCase();
+      const refCode = `${timestamp}-${uuid}`;
+      const refNumber = refCode;
       
       console.log('Uploading GPS problem images to Firebase...');
       
@@ -85,13 +94,15 @@ export default function GPSForm({ imageUris, onSuccess, onCancel }: GPSFormProps
           // Use the upload utility for multiple images
           uploadResults = await uploadMultipleIssueFiles({
             bucketFolder: "gps-problems",
+            refCode: refCode,
             imageUris: validImageUris,
             meta: {
               full_name: formData.fullName,
               phone: formData.phone,
               system: formData.system,
               issue_type: "GPS Problem",
-              issue: formData.issueDescription
+              issue: formData.issueDescription,
+              refCode: refCode
             }
           });
         } catch (uploadError) {
@@ -112,6 +123,7 @@ export default function GPSForm({ imageUris, onSuccess, onCancel }: GPSFormProps
         images: uploadResults.map(result => result.downloadUrl),
         timestamp: timestamp,
         reference_number: refNumber,
+        refCode: refCode,
         submitted_at: new Date().toISOString(),
       };
 
@@ -125,8 +137,17 @@ export default function GPSForm({ imageUris, onSuccess, onCancel }: GPSFormProps
       console.error('Firebase submission error:', error);
       // For development, still show success even if Firebase fails
       console.warn('Proceeding with success for development...');
-      const timestamp = Date.now().toString();
-      onSuccess(timestamp);
+      const now = new Date();
+      const year = now.getUTCFullYear();
+      const month = String(now.getUTCMonth() + 1).padStart(2, '0');
+      const day = String(now.getUTCDate()).padStart(2, '0');
+      const hours = String(now.getUTCHours()).padStart(2, '0');
+      const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+      const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+      const timestamp = `${year}${month}${day}${hours}${minutes}${seconds}`;
+      const uuid = Math.random().toString(36).substring(2, 5).toUpperCase();
+      const fallbackRefCode = `${timestamp}-${uuid}`;
+      onSuccess(fallbackRefCode);
     } finally {
       setIsSubmitting(false);
     }
