@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 import { ExternalLink, MessageCircle, Phone, Navigation, Camera, Upload, Gauge, Download, Map, Wifi, Zap } from "lucide-react-native";
-import { CameraView, useCameraPermissions } from 'expo-camera';
+
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from "expo-router";
 import { useTheme } from "@/constants/theme";
@@ -33,14 +33,10 @@ interface DiagnosticResource {
 export default function GPSDiagnosticScreen() {
   const { colors } = useTheme();
   const router = useRouter();
-  const [showCamera, setShowCamera] = useState(false);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [referenceNumber, setReferenceNumber] = useState<string>("");
-  
-  // Always call the hook, but handle web platform differently
-  const [cameraPermission, requestCameraPermission] = useCameraPermissions();
 
   const diagnosticResources: DiagnosticResource[] = [
     {
@@ -80,14 +76,42 @@ export default function GPSDiagnosticScreen() {
       return;
     }
     
-    if (!cameraPermission?.granted) {
-      const permission = await requestCameraPermission();
-      if (!permission.granted) {
-        Alert.alert('Permission Required', 'Camera permission is required to take photos.');
+    const permission = await ImagePicker.requestCameraPermissionsAsync();
+    if (!permission.granted) {
+      Alert.alert('Permission Required', 'Camera permission is required to take photos.');
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 0.8,
+      allowsEditing: false,
+    });
+
+    if (!result.canceled && result.assets && result.assets.length > 0) {
+      const asset = result.assets[0];
+      if (!asset || !asset.uri) {
+        Alert.alert('Error', 'Failed to capture image. Please try again.');
         return;
       }
+      
+      const newUri = asset.uri;
+      if (newUri && newUri.trim().length > 0 && newUri !== 'undefined' && newUri !== 'null') {
+        if (selectedImages.length >= 10) {
+          Alert.alert('Image Limit', 'Maximum 10 images allowed. Please remove some images first.');
+          return;
+        }
+        
+        setSelectedImages(prev => {
+          const updated = [...prev, newUri];
+          return Array.from(new Set(updated));
+        });
+        console.log('Camera photo captured successfully');
+      } else {
+        console.warn('Invalid camera URI:', newUri);
+        Alert.alert('Error', 'Failed to capture image. Please try again.');
+      }
     }
-    setShowCamera(true);
   };
 
   const handleUploadPhoto = async () => {
@@ -139,46 +163,7 @@ export default function GPSDiagnosticScreen() {
     }
   };
 
-  const handleCameraCapture = async () => {
-    try {
-      const result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        quality: 0.8,
-        base64: false,
-        allowsEditing: false,
-      });
 
-      if (!result.canceled && result.assets && result.assets.length > 0) {
-        const asset = result.assets[0];
-        if (!asset || !asset.uri) {
-          Alert.alert('Error', 'Failed to capture image. Please try again.');
-          return;
-        }
-        
-        const newUri = asset.uri;
-        if (newUri && newUri.trim().length > 0 && newUri !== 'undefined' && newUri !== 'null') {
-          if (selectedImages.length >= 10) {
-            Alert.alert('Image Limit', 'Maximum 10 images allowed. Please remove some images first.');
-            return;
-          }
-          
-          setSelectedImages(prev => {
-            const updated = [...prev, newUri];
-            return Array.from(new Set(updated)); // Remove duplicates
-          });
-          console.log('Camera photo captured successfully');
-        } else {
-          console.warn('Invalid camera URI:', newUri);
-          Alert.alert('Error', 'Failed to capture image. Please try again.');
-        }
-      }
-    } catch (error) {
-      console.error('Error capturing photo:', error);
-      Alert.alert('Error', 'Failed to capture photo. Please try again.');
-    } finally {
-      setShowCamera(false);
-    }
-  };
 
   const handleSendPhotos = () => {
     if (selectedImages.length === 0) {
@@ -534,34 +519,6 @@ export default function GPSDiagnosticScreen() {
         {/* Bottom Spacing */}
         <View style={styles.bottomSpacing} />
       </ScrollView>
-      
-      {/* Camera Modal */}
-      {showCamera && Platform.OS !== 'web' && (
-        <View style={styles.cameraContainer}>
-          <CameraView
-            style={styles.camera}
-            facing="back"
-          >
-            <View style={styles.cameraControls}>
-              <TouchableOpacity
-                style={[styles.cameraButton, { backgroundColor: 'rgba(0,0,0,0.6)' }]}
-                onPress={() => setShowCamera(false)}
-              >
-                <Text style={styles.cameraButtonText}>Cancel</Text>
-              </TouchableOpacity>
-              
-              <TouchableOpacity
-                style={[styles.captureButton, { backgroundColor: colors.tint }]}
-                onPress={handleCameraCapture}
-              >
-                <Camera size={32} color="#FFFFFF" />
-              </TouchableOpacity>
-              
-              <View style={styles.spacer} />
-            </View>
-          </CameraView>
-        </View>
-      )}
     </View>
   );
 }
@@ -831,46 +788,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 18,
   },
-  cameraContainer: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "#000000",
-  },
-  camera: {
-    flex: 1,
-  },
-  cameraControls: {
-    position: "absolute",
-    bottom: 50,
-    left: 0,
-    right: 0,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 30,
-  },
-  cameraButton: {
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 8,
-    width: 80,
-    alignItems: "center",
-  },
-  cameraButtonText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "600" as const,
-  },
-  captureButton: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+
   updateNotice: {
     padding: 16,
     borderRadius: 12,
@@ -941,9 +859,6 @@ const styles = StyleSheet.create({
   },
   bottomSpacing: {
     height: 50,
-  },
-  spacer: {
-    width: 80,
   },
   selectedPhotosContainer: {
     flexDirection: "row",
