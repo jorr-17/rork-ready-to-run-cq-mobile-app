@@ -219,8 +219,7 @@ export default function SnapSendScreen() {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             quality: 0.8,
             base64: false,
-            allowsEditing: true,
-            aspect: [4, 3],
+            allowsEditing: false,
           })
         : await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,

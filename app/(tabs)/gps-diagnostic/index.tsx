@@ -145,8 +145,7 @@ export default function GPSDiagnosticScreen() {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         quality: 0.8,
         base64: false,
-        allowsEditing: true,
-        aspect: [4, 3],
+        allowsEditing: false,
       });
 
       if (!result.canceled && result.assets && result.assets.length > 0) {
