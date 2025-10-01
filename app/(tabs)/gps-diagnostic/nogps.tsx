@@ -55,7 +55,7 @@ export default function NoGPSScreen() {
       icon: <Satellite size={32} color={yellowColor} />,
       satelliteType: "yellow",
       steps: [
-        "Check Base Station Channel|Make sure your receiver is tuned to the correct base station channel number.",
+        "#1 Solution: Check the Base Station Channel or Correction Source|The most common cause of a yellow satellite icon is an incorrect base station channel or correction source setting. • Verify your receiver is tuned to the correct base station channel number. • Confirm the base station is powered on and actively transmitting corrections. • Ensure your receiver is set to the correct correction source (e.g., RTK, SBAS, etc.).",
         "Verify Base Station Operation|Confirm that the base station is powered on and actively transmitting corrections.",
         "Cross-Check With Another Machine (if available)|Test another machine with a different GPS system. If it also fails to receive corrections, the issue is likely with the base station itself.",
         "Confirm Correction Source Selection|If the base station is working, ensure your receiver is set to the correct correction source (e.g., RTK, SBAS, etc.).",
@@ -261,15 +261,30 @@ export default function NoGPSScreen() {
                 </>
               ) : (
                 <>
-                  <Text style={[styles.sectionTitle, { color: colors.text }]}>Diagnostic Steps</Text>
+                  <View style={[styles.primarySolutionCard, { backgroundColor: "#4CAF50", borderColor: "#45a049" }]}>
+                    <View style={styles.primarySolutionHeader}>
+                      <Text style={styles.primarySolutionBadge}>🎯 #1 Solution</Text>
+                      <Text style={styles.primarySolutionTitle}>Check the Base Station Channel or Correction Source</Text>
+                    </View>
+                    <Text style={styles.primarySolutionDescription}>
+                      The most common cause of a yellow satellite icon is an incorrect base station channel or correction source setting.
+                    </Text>
+                    <View style={styles.primarySolutionSteps}>
+                      <Text style={styles.primarySolutionStep}>• Verify your receiver is tuned to the correct base station channel number.</Text>
+                      <Text style={styles.primarySolutionStep}>• Confirm the base station is powered on and actively transmitting corrections.</Text>
+                      <Text style={styles.primarySolutionStep}>• Ensure your receiver is set to the correct correction source (e.g., RTK, SBAS, etc.).</Text>
+                    </View>
+                  </View>
                   
-                  {step.steps.map((stepText, stepIndex) => {
+                  <Text style={[styles.sectionTitle, { color: colors.text, marginTop: 16 }]}>Additional Steps</Text>
+                  
+                  {step.steps.slice(1).map((stepText, stepIndex) => {
                     const [title, description] = stepText.includes('|') 
                       ? stepText.split('|') 
                       : [stepText.split(' – ')[0] || stepText.split(' - ')[0], stepText];
                     
                     return (
-                      <View key={stepIndex} style={[styles.stepCard, { backgroundColor: colors.card, borderColor: colors.divider }]}>
+                      <View key={stepIndex + 1} style={[styles.stepCard, { backgroundColor: colors.card, borderColor: colors.divider }]}>
                         <View style={styles.stepHeader}>
                           <View style={[styles.stepNumber, { backgroundColor: colors.tint }]}>
                             <Text style={styles.stepNumberText}>{stepIndex + 1}</Text>
