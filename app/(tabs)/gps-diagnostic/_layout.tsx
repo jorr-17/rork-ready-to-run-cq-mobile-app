@@ -15,6 +15,7 @@ export default function GPSDiagnosticLayout() {
         headerTitleStyle: {
           fontWeight: "bold" as const,
         },
+        headerBackTitle: "",
       }}
     >
       <Stack.Screen
