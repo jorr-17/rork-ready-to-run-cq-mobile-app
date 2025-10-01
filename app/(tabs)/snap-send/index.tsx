@@ -409,7 +409,7 @@ export default function SnapSendScreen() {
 
         {/* Image Upload Section */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>Upload Photos</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text, textAlign: "center" }]}>Upload Photos</Text>
           <Text style={[styles.sectionHint, { color: colors.textMuted }]}>
             Add up to 10 photos showing the mechanical problem or issue
           </Text>
@@ -450,7 +450,7 @@ export default function SnapSendScreen() {
                   onPress={() => pickImage(true)}
                 >
                   <Camera size={32} color={colors.tint} />
-                  <Text style={[styles.uploadButtonText, { color: colors.tint }]}>Take Photo</Text>
+                  <Text style={[styles.uploadButtonText, { color: colors.tint, textAlign: "center" }]}>Take Photo</Text>
                 </TouchableOpacity>
                 
                 <TouchableOpacity

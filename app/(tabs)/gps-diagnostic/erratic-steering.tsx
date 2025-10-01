@@ -257,7 +257,7 @@ export default function ErraticSteeringScreen() {
             >
               <Camera size={24} color="#FFFFFF" />
               <Text style={styles.photoButtonText}>
-                {Platform.OS === 'web' ? 'Camera N/A' : 'Add Photo'}
+                {Platform.OS === 'web' ? 'Camera N/A' : 'Take Photo'}
               </Text>
             </TouchableOpacity>
             
@@ -267,7 +267,7 @@ export default function ErraticSteeringScreen() {
               activeOpacity={0.8}
             >
               <Upload size={24} color="#FFFFFF" />
-              <Text style={styles.photoButtonText}>Upload Photos</Text>
+              <Text style={[styles.photoButtonText, { textAlign: "center" }]}>Upload Photos</Text>
             </TouchableOpacity>
           </View>
           
